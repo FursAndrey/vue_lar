@@ -19983,8 +19983,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                console.log(postId);
-                _context3.next = 3;
+                _context3.next = 2;
                 return axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]('/api/post/' + postId).then(function (response) {
                   _this3.posts = _this3.posts.filter(function (p) {
                     return p.id !== response.data.id;
@@ -19994,7 +19993,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   console.log(error);
                 });
 
-              case 3:
+              case 2:
               case "end":
                 return _context3.stop();
             }
@@ -20115,7 +20114,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.post.author), 1
   /* TEXT */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_button, {
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_button, {
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return _ctx.$emit('removePost', $props.post.id);
     })
@@ -20126,7 +20125,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"post__btns\">\r\n            <my-button @click=\"$router.push(`/posts/${post.id}`)\">\r\n                Открыть\r\n            </my-button>\r\n            <my-button @click=\"$emit('remove', post)\">\r\n                Удалить\r\n            </my-button>\r\n        </div> ")]);
+  })]);
 }
 
 /***/ }),
@@ -20335,7 +20334,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_button, {
         style: {
-          "align-self": "flex-end",
           "margin-top": "15px"
         },
         onClick: $options.createPost
@@ -20350,7 +20348,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_button, {
         style: {
-          "align-self": "flex-end",
           "margin-top": "15px",
           "margin-left": "15px"
         },
@@ -20552,7 +20549,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.post[data-v-3d1b2bbe] {\r\n        padding: 15px;\r\n        border: 2px solid rgb(66, 133, 51);\r\n        margin-top: 15px;\r\n        display: flex;\r\n        align-items: center;\r\n        justify-content: space-between;\r\n        border-radius: 10px;\n}\n.post__btns[data-v-3d1b2bbe] {\r\n        display: flex;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.post[data-v-3d1b2bbe] {\r\n        padding: 15px;\r\n        border: 2px solid rgb(66, 133, 51);\r\n        margin-top: 15px;\r\n        display: flex;\r\n        align-items: center;\r\n        justify-content: space-between;\r\n        border-radius: 10px;\n}\n.post > div[data-v-3d1b2bbe] {\r\n        display: flex;\r\n        flex-direction: column;\n}\n.post__btns[data-v-3d1b2bbe] {\r\n        display: flex;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

@@ -21,10 +21,10 @@
                 type="text"
                 placeholder="Автор"
             />
-            <my-button style="align-self: flex-end; margin-top: 15px" @click="createPost">
+            <my-button style="margin-top: 15px" @click="createPost">
                 Создать
             </my-button>
-            <my-button style="align-self: flex-end; margin-top: 15px; margin-left: 15px;" @click="hideDialog">
+            <my-button style="margin-top: 15px; margin-left: 15px;" @click="hideDialog">
                 Закрыть
             </my-button>
         </form>
@@ -91,7 +91,7 @@
             async removePost(postId) {
                 await axios.delete('/api/post/'+postId)
                     .then((response) => {
-                        this.posts = this.posts.filter(p => p.id !== response.data.id)
+                        this.posts = this.posts.filter(p => p.id !== response.data.id);
                     })
                     .catch((error) => {
                         console.log('error');
