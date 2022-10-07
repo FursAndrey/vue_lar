@@ -5,6 +5,9 @@
             <div><strong>Название:</strong> {{ post.title }}</div>
             <div><strong>Описание:</strong> {{ post.body }}</div>
             <div><strong>Автор:</strong> {{ post.author }}</div>
+            <my-button @click="$emit('removePost', post.id)">
+                Удалить
+            </my-button>
         </div>
         <!-- <div class="post__btns">
             <my-button @click="$router.push(`/posts/${post.id}`)">

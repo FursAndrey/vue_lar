@@ -19944,13 +19944,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var str;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                str = JSON.stringify(_this2.post);
-                _context2.next = 3;
+                _context2.next = 2;
                 return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/post', {
                   "title": _this2.post.title,
                   "body": _this2.post.body,
@@ -19969,12 +19967,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   console.log(error);
                 });
 
-              case 3:
+              case 2:
               case "end":
                 return _context2.stop();
             }
           }
         }, _callee2);
+      }))();
+    },
+    removePost: function removePost(postId) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                console.log(postId);
+                _context3.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]('/api/post/' + postId).then(function (response) {
+                  _this3.posts = _this3.posts.filter(function (p) {
+                    return p.id !== response.data.id;
+                  });
+                })["catch"](function (error) {
+                  console.log('error');
+                  console.log(error);
+                });
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
       }))();
     }
   }
@@ -20080,6 +20105,8 @@ var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
 });
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_my_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("my-button");
+
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.post.id), 1
   /* TEXT */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.post.title), 1
@@ -20088,7 +20115,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.post.author), 1
   /* TEXT */
-  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"post__btns\">\r\n            <my-button @click=\"$router.push(`/posts/${post.id}`)\">\r\n                Открыть\r\n            </my-button>\r\n            <my-button @click=\"$emit('remove', post)\">\r\n                Удалить\r\n            </my-button>\r\n        </div> ")]);
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_button, {
+    onClick: _cache[0] || (_cache[0] = function ($event) {
+      return _ctx.$emit('removePost', $props.post.id);
+    })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Удалить ")];
+    }),
+    _: 1
+    /* STABLE */
+
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"post__btns\">\r\n            <my-button @click=\"$router.push(`/posts/${post.id}`)\">\r\n                Открыть\r\n            </my-button>\r\n            <my-button @click=\"$emit('remove', post)\">\r\n                Удалить\r\n            </my-button>\r\n        </div> ")]);
 }
 
 /***/ }),
@@ -20342,10 +20380,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.posts, function (post) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_post_item, {
           post: post,
-          key: post.id
+          key: post.id,
+          onRemovePost: $options.removePost
         }, null, 8
         /* PROPS */
-        , ["post"]);
+        , ["post", "onRemovePost"]);
       }), 128
       /* KEYED_FRAGMENT */
       ))];
@@ -20353,7 +20392,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <post-item\r\n            v-for=\"post in posts\"\r\n            :post=\"post\"\r\n            :key=\"post.id\"\r\n            @remove=\"$emit('remove', post)\"\r\n        /> ")])], 64
+  })])], 64
   /* STABLE_FRAGMENT */
   );
 }
