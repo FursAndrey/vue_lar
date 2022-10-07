@@ -4,7 +4,30 @@
         <my-button @click="showDialog">Создать пост</my-button>
     </div>
     <my-modal v-model:show="dialogVisible" @hideDialog="hideDialog">
-        Form will here.
+        <form @submit.prevent>
+            <h4>Создание поста</h4>
+            <my-input
+                v-model="post.title"
+                type="text"
+                placeholder="Название"
+            />
+            <my-input
+                v-model="post.body"
+                type="text"
+                placeholder="Описание"
+            />
+            <my-input
+                v-model="post.author"
+                type="text"
+                placeholder="Автор"
+            />
+            <my-button style="align-self: flex-end; margin-top: 15px" @click="createPost">
+                Создать
+            </my-button>
+            <my-button style="align-self: flex-end; margin-top: 15px; margin-left: 15px;" @click="hideDialog">
+                Закрыть
+            </my-button>
+        </form>
     </my-modal>
     
     <div class="content">
@@ -36,6 +59,11 @@
             return {
                 posts: [],
                 dialogVisible: false,
+                post: {
+                    title: '',
+                    body: '',
+                    author: '',
+                }
             }
         },
         async mounted() {
@@ -48,6 +76,24 @@
             },
             hideDialog() {
                 this.dialogVisible = false;
+            },
+            async createPost() {
+                const str = JSON.stringify(this.post);
+
+                await axios.post('/api/post', {"title":this.post.title,"body":this.post.body,"author":this.post.author})
+                    .then((response) => {
+                        this.posts.push(response.data);
+                        this.post = {
+                            title: '',
+                            body: '',
+                            author: '',
+                        }
+                        this.dialogVisible = false;
+                    })
+                    .catch((error) => {
+                        console.log('error');
+                        console.log(error);
+                    });
             },
         }
     }
