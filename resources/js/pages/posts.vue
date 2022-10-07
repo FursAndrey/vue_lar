@@ -21,10 +21,10 @@
                 type="text"
                 placeholder="Автор"
             />
-            <my-button style="align-self: flex-end; margin-top: 15px" @click="createPost">
+            <my-button style="margin-top: 15px" @click="createPost">
                 Создать
             </my-button>
-            <my-button style="align-self: flex-end; margin-top: 15px; margin-left: 15px;" @click="hideDialog">
+            <my-button style="margin-top: 15px; margin-left: 15px;" @click="hideDialog">
                 Закрыть
             </my-button>
         </form>
@@ -36,14 +36,9 @@
                 v-for="post in posts"
                 :post="post"
                 :key="post.id"
+                @removePost="removePost"
             />
         </transition-group>
-        <!-- <post-item
-            v-for="post in posts"
-            :post="post"
-            :key="post.id"
-            @remove="$emit('remove', post)"
-        /> -->
     </div>
 </template>
 
@@ -78,8 +73,6 @@
                 this.dialogVisible = false;
             },
             async createPost() {
-                const str = JSON.stringify(this.post);
-
                 await axios.post('/api/post', {"title":this.post.title,"body":this.post.body,"author":this.post.author})
                     .then((response) => {
                         this.posts.push(response.data);
@@ -89,6 +82,16 @@
                             author: '',
                         }
                         this.dialogVisible = false;
+                    })
+                    .catch((error) => {
+                        console.log('error');
+                        console.log(error);
+                    });
+            },
+            async removePost(postId) {
+                await axios.delete('/api/post/'+postId)
+                    .then((response) => {
+                        this.posts = this.posts.filter(p => p.id !== response.data.id);
                     })
                     .catch((error) => {
                         console.log('error');

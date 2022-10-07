@@ -6,14 +6,9 @@
             <div><strong>Описание:</strong> {{ post.body }}</div>
             <div><strong>Автор:</strong> {{ post.author }}</div>
         </div>
-        <!-- <div class="post__btns">
-            <my-button @click="$router.push(`/posts/${post.id}`)">
-                Открыть
-            </my-button>
-            <my-button @click="$emit('remove', post)">
-                Удалить
-            </my-button>
-        </div> -->
+        <my-button @click="$emit('removePost', post.id)">
+            Удалить
+        </my-button>
     </div>
 </template>
   
@@ -37,6 +32,10 @@
         align-items: center;
         justify-content: space-between;
         border-radius: 10px;
+    }
+    .post > div {
+        display: flex;
+        flex-direction: column;
     }
     .post__btns {
         display: flex;
