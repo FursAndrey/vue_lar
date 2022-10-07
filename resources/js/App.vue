@@ -1,0 +1,33 @@
+<script setup>
+</script>
+
+<template>
+    <div class="header">
+        <h1><RouterLink to="/">Vue + Laravel</RouterLink></h1>
+        <div id='nav-bar'>
+            <RouterLink to="/posts">Posts</RouterLink>
+        </div>
+    </div>
+    <router-view></router-view>
+</template>
+
+<style scoped>
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+div#nav-bar {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+}
+.header a {
+    text-decoration: none;
+}
+#nav-bar > a {
+    border: 1px solid green;
+    padding: 10px;
+    border-radius: 10px;
+    color: green;
+}
+</style>
