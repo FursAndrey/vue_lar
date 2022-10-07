@@ -3,7 +3,7 @@
 
 <template>
     <div class="header">
-        <h1><RouterLink to="/">Vue + Laravel</RouterLink></h1>
+        <h1 class="logo"><RouterLink to="/">Vue + Laravel</RouterLink></h1>
         <div id='nav-bar'>
             <RouterLink to="/posts">Posts</RouterLink>
         </div>
@@ -12,6 +12,11 @@
 </template>
 
 <style scoped>
+.logo {
+    color: #0400ff;
+    font-family: sans-serif;
+    font-style: italic;
+}
 .header {
     display: flex;
     justify-content: space-between;
