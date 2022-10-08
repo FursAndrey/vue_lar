@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import home from '../pages/home.vue';
 import posts from '../pages/posts.vue';
+import post from '../pages/post.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -14,7 +15,12 @@ const router = createRouter({
             path: '/posts',
             name: 'posts',
             component: posts
-        }
+        },
+        {
+            path: '/post/:id',
+            name: 'post',
+            component: post
+        },
     ]
 })
 

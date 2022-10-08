@@ -7,10 +7,13 @@
             <div><strong>Автор:</strong> {{ post.author }}</div>
         </div>
         <div class="post__btns">
-            <my-button @click="$emit('editPost', post.id)">
+            <my-button @click="$router.push(`/post/${post.id}`)" v-if="this.isAllPosts">
+                Открыть
+            </my-button>
+            <my-button @click="$emit('editPost', post.id)" style="margin: 0 15px;">
                 Изменить
             </my-button>
-            <my-button @click="$emit('removePost', post.id)" style="margin-left: 15px;">        
+            <my-button @click="$emit('removePost', post.id)">        
                 Удалить
             </my-button>
         </div>
@@ -24,6 +27,15 @@
                 type: Object,
                 required: true,
             }
+        },
+        data() {
+            return {
+                isAllPosts: true,
+            }
+        },
+        mounted() {
+            let id = this.$route.params.id*1;
+            this.isAllPosts = !Number.isInteger(id);
         }
     }
 </script>
