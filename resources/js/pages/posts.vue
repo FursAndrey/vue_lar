@@ -44,6 +44,19 @@
             />
         </transition-group>
     </div>
+    <div class="pagination">
+        <div 
+            class="page" 
+            v-for="page in this.totalPages" 
+            :key="page" 
+            v-on:click="changePage(page)" 
+            :class="{
+                'current-page': currentPage === page,
+            }"
+            >
+            {{ page }}
+        </div>
+    </div>
 </template>
 
 <script>
@@ -64,12 +77,13 @@
                     title: '',
                     body: '',
                     author: '',
-                }
+                },
+                currentPage: 1,
+                totalPages: 0,
             }
         },
-        async mounted() {
-            let result = await axios.get('/api/post');
-            this.posts = result.data;
+        mounted() {
+            this.getPosts();
         },
         methods: {
             showDialog() {
@@ -77,6 +91,11 @@
             },
             hideDialog() {
                 this.dialogVisible = false;
+            },
+            async getPosts() {
+                let result = await axios.get('/api/post', { params: {'page': this.currentPage} });
+                this.totalPages = Math.ceil(result.data.total / result.data.per_page);
+                this.posts = result.data.data;
             },
             async createPost() {
                 await axios.post('/api/post', {"title":this.post.title,"body":this.post.body,"author":this.post.author})
@@ -137,6 +156,14 @@
                         console.log('error updatePost');
                         console.log(error);
                     });
+            },
+            changePage(page) {
+                this.currentPage = page;
+            }
+        },
+        watch: {
+            currentPage() {
+                this.getPosts();
             }
         }
     }
@@ -150,8 +177,11 @@
         display: inline-block;
         margin-right: 10px;
     }
-    .user-list-enter-active, .user-list-leave-active {
+    .user-list-enter-active {
         transition: all 0.8s ease;
+    }
+    .user-list-leave-active {
+        transition: all 0.01s ease;
     }
     .user-list-enter-from, .user-list-leave-to {
         opacity: 0;
@@ -159,5 +189,20 @@
     }
     .user-list-move {
         transition: transform 0.8s ease;
+    }
+    .pagination {
+        display: flex;
+        margin-top: 15px;
+    }
+    .pagination > .page {
+        font-size: 1.5rem;
+        padding: 10px;
+        border: 2px solid black;
+        margin: 0 1px;
+        border-radius: 10px;
+        cursor: pointer;
+    }    
+    .pagination > .current-page {
+        border: 2px solid green;
     }
 </style>

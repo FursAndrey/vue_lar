@@ -19983,32 +19983,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         title: '',
         body: '',
         author: ''
-      }
+      },
+      currentPage: 1,
+      totalPages: 0
     };
   },
   mounted: function mounted() {
-    var _this = this;
-
-    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var result;
-      return _regeneratorRuntime().wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/post');
-
-            case 2:
-              result = _context.sent;
-              _this.posts = result.data;
-
-            case 4:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }))();
+    this.getPosts();
   },
   methods: {
     showDialog: function showDialog() {
@@ -20016,6 +19997,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     hideDialog: function hideDialog() {
       this.dialogVisible = false;
+    },
+    getPosts: function getPosts() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var result;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/post', {
+                  params: {
+                    'page': _this.currentPage
+                  }
+                });
+
+              case 2:
+                result = _context.sent;
+                _this.totalPages = Math.ceil(result.data.total / result.data.per_page);
+                _this.posts = result.data.data;
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     },
     createPost: function createPost() {
       var _this2 = this;
@@ -20146,6 +20156,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee5);
       }))();
+    },
+    changePage: function changePage(page) {
+      this.currentPage = page;
+    }
+  },
+  watch: {
+    currentPage: function currentPage() {
+      this.getPosts();
     }
   }
 });
@@ -20482,6 +20500,10 @@ var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_4 = {
   "class": "content"
 };
+var _hoisted_5 = {
+  "class": "pagination"
+};
+var _hoisted_6 = ["onClick"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_my_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("my-button");
 
@@ -20613,7 +20635,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })])], 64
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.totalPages, function (page) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["page", {
+        'current-page': $data.currentPage === page
+      }]),
+      key: page,
+      onClick: function onClick($event) {
+        return $options.changePage(page);
+      }
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(page), 11
+    /* TEXT, CLASS, PROPS */
+    , _hoisted_6);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))])], 64
   /* STABLE_FRAGMENT */
   );
 }
@@ -20875,7 +20911,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.functions[data-v-ba3dfa8c]{\r\n        margin: 15px 0;\n}\n.user-list-item[data-v-ba3dfa8c] {\r\n        display: inline-block;\r\n        margin-right: 10px;\n}\n.user-list-enter-active[data-v-ba3dfa8c], .user-list-leave-active[data-v-ba3dfa8c] {\r\n        transition: all 0.8s ease;\n}\n.user-list-enter-from[data-v-ba3dfa8c], .user-list-leave-to[data-v-ba3dfa8c] {\r\n        opacity: 0;\r\n        transform: translateX(180px);\n}\n.user-list-move[data-v-ba3dfa8c] {\r\n        transition: transform 0.8s ease;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.functions[data-v-ba3dfa8c]{\r\n        margin: 15px 0;\n}\n.user-list-item[data-v-ba3dfa8c] {\r\n        display: inline-block;\r\n        margin-right: 10px;\n}\n.user-list-enter-active[data-v-ba3dfa8c] {\r\n        transition: all 0.8s ease;\n}\n.user-list-leave-active[data-v-ba3dfa8c] {\r\n        transition: all 0.01s ease;\n}\n.user-list-enter-from[data-v-ba3dfa8c], .user-list-leave-to[data-v-ba3dfa8c] {\r\n        opacity: 0;\r\n        transform: translateX(180px);\n}\n.user-list-move[data-v-ba3dfa8c] {\r\n        transition: transform 0.8s ease;\n}\n.pagination[data-v-ba3dfa8c] {\r\n        display: flex;\r\n        margin-top: 15px;\n}\n.pagination > .page[data-v-ba3dfa8c] {\r\n        font-size: 1.5rem;\r\n        padding: 10px;\r\n        border: 2px solid black;\r\n        margin: 0 1px;\r\n        border-radius: 10px;\r\n        cursor: pointer;\n}\n.pagination > .current-page[data-v-ba3dfa8c] {\r\n        border: 2px solid green;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
