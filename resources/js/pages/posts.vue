@@ -21,8 +21,11 @@
                 type="text"
                 placeholder="Автор"
             />
-            <my-button style="margin-top: 15px" @click="createPost">
-                Создать
+            <my-button style="margin-top: 15px" @click="createPost" v-if="isNewPost">
+                Сохранить
+            </my-button>
+            <my-button style="margin-top: 15px" @click="updatePost" v-else>
+                Обновить
             </my-button>
             <my-button style="margin-top: 15px; margin-left: 15px;" @click="hideDialog">
                 Закрыть
@@ -37,6 +40,7 @@
                 :post="post"
                 :key="post.id"
                 @removePost="removePost"
+                @editPost="editPost"
             />
         </transition-group>
     </div>
@@ -54,6 +58,8 @@
             return {
                 posts: [],
                 dialogVisible: false,
+                isNewPost: true,
+                postId: '',
                 post: {
                     title: '',
                     body: '',
@@ -84,9 +90,11 @@
                         this.dialogVisible = false;
                     })
                     .catch((error) => {
-                        console.log('error');
+                        console.log('error createPost');
                         console.log(error);
+                        console.log(this.post);
                     });
+                this.isNewPost = true;
             },
             async removePost(postId) {
                 await axios.delete('/api/post/'+postId)
@@ -94,10 +102,42 @@
                         this.posts = this.posts.filter(p => p.id !== response.data.id);
                     })
                     .catch((error) => {
-                        console.log('error');
+                        console.log('error removePost');
                         console.log(error);
                     });
             },
+            async editPost(postId) {
+                this.showDialog();
+                await axios.get('/api/post/'+postId)
+                    .then((response) => {
+                        this.isNewPost = false;
+                        this.postId = postId;
+                        this.post = response.data;
+                    })
+                    .catch((error) => {
+                        console.log('error editPost');
+                        console.log(error);
+                    });
+            },
+            async updatePost() {
+                await axios.put('/api/post/'+this.postId, {"title":this.post.title,"body":this.post.body,"author":this.post.author})
+                    .then((response) => {
+                        this.posts = this.posts.map((el) => {
+                            return el.id !== response.data.id ? el : response.data;
+                        });
+                        this.post = {
+                            title: '',
+                            body: '',
+                            author: '',
+                        }
+                        this.dialogVisible = false;
+                        this.isNewPost = true;
+                    })
+                    .catch((error) => {
+                        console.log('error updatePost');
+                        console.log(error);
+                    });
+            }
         }
     }
 </script>
@@ -106,7 +146,6 @@
     .functions{
         margin: 15px 0;
     }
-    
     .user-list-item {
         display: inline-block;
         margin-right: 10px;

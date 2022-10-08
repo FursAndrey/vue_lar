@@ -6,9 +6,14 @@
             <div><strong>Описание:</strong> {{ post.body }}</div>
             <div><strong>Автор:</strong> {{ post.author }}</div>
         </div>
-        <my-button @click="$emit('removePost', post.id)">
-            Удалить
-        </my-button>
+        <div class="post__btns">
+            <my-button @click="$emit('editPost', post.id)">
+                Изменить
+            </my-button>
+            <my-button @click="$emit('removePost', post.id)" style="margin-left: 15px;">        
+                Удалить
+            </my-button>
+        </div>
     </div>
 </template>
   
@@ -38,6 +43,6 @@
         flex-direction: column;
     }
     .post__btns {
-        display: flex;
+        flex-direction: unset !important;
     }
 </style>

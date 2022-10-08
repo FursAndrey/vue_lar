@@ -19902,6 +19902,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       posts: [],
       dialogVisible: false,
+      isNewPost: true,
+      postId: '',
       post: {
         title: '',
         body: '',
@@ -19963,11 +19965,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   };
                   _this2.dialogVisible = false;
                 })["catch"](function (error) {
-                  console.log('error');
+                  console.log('error createPost');
                   console.log(error);
+                  console.log(_this2.post);
                 });
 
               case 2:
+                _this2.isNewPost = true;
+
+              case 3:
               case "end":
                 return _context2.stop();
             }
@@ -19989,7 +19995,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     return p.id !== response.data.id;
                   });
                 })["catch"](function (error) {
-                  console.log('error');
+                  console.log('error removePost');
                   console.log(error);
                 });
 
@@ -19999,6 +20005,72 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee3);
+      }))();
+    },
+    editPost: function editPost(postId) {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _this4.showDialog();
+
+                _context4.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/post/' + postId).then(function (response) {
+                  _this4.isNewPost = false;
+                  _this4.postId = postId;
+                  _this4.post = response.data;
+                })["catch"](function (error) {
+                  console.log('error editPost');
+                  console.log(error);
+                });
+
+              case 3:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+    updatePost: function updatePost() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+        return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default().put('/api/post/' + _this5.postId, {
+                  "title": _this5.post.title,
+                  "body": _this5.post.body,
+                  "author": _this5.post.author
+                }).then(function (response) {
+                  _this5.posts = _this5.posts.map(function (el) {
+                    return el.id !== response.data.id ? el : response.data;
+                  }); // this.posts = nA;
+
+                  _this5.post = {
+                    title: '',
+                    body: '',
+                    author: ''
+                  };
+                  _this5.dialogVisible = false;
+                  _this5.isNewPost = true;
+                })["catch"](function (error) {
+                  console.log('error updatePost');
+                  console.log(error);
+                });
+
+              case 2:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
       }))();
     }
   }
@@ -20103,6 +20175,9 @@ var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
+var _hoisted_5 = {
+  "class": "post__btns"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_my_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("my-button");
 
@@ -20114,10 +20189,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.post.author), 1
   /* TEXT */
-  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_button, {
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_button, {
     onClick: _cache[0] || (_cache[0] = function ($event) {
-      return _ctx.$emit('removePost', $props.post.id);
+      return _ctx.$emit('editPost', $props.post.id);
     })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Изменить ")];
+    }),
+    _: 1
+    /* STABLE */
+
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_button, {
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return _ctx.$emit('removePost', $props.post.id);
+    }),
+    style: {
+      "margin-left": "15px"
+    }
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Удалить ")];
@@ -20125,7 +20214,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })]);
+  })])]);
 }
 
 /***/ }),
@@ -20332,21 +20421,37 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         placeholder: "Автор"
       }, null, 8
       /* PROPS */
-      , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_button, {
+      , ["modelValue"]), $data.isNewPost ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_my_button, {
+        key: 0,
         style: {
           "margin-top": "15px"
         },
         onClick: $options.createPost
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Создать ")];
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Сохранить ")];
         }),
         _: 1
         /* STABLE */
 
       }, 8
       /* PROPS */
-      , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_button, {
+      , ["onClick"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_my_button, {
+        key: 1,
+        style: {
+          "margin-top": "15px"
+        },
+        onClick: $options.updatePost
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Обновить ")];
+        }),
+        _: 1
+        /* STABLE */
+
+      }, 8
+      /* PROPS */
+      , ["onClick"])), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_button, {
         style: {
           "margin-top": "15px",
           "margin-left": "15px"
@@ -20378,10 +20483,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_post_item, {
           post: post,
           key: post.id,
-          onRemovePost: $options.removePost
+          onRemovePost: $options.removePost,
+          onEditPost: $options.editPost
         }, null, 8
         /* PROPS */
-        , ["post", "onRemovePost"]);
+        , ["post", "onRemovePost", "onEditPost"]);
       }), 128
       /* KEYED_FRAGMENT */
       ))];
@@ -20549,7 +20655,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.post[data-v-3d1b2bbe] {\r\n        padding: 15px;\r\n        border: 2px solid rgb(66, 133, 51);\r\n        margin-top: 15px;\r\n        display: flex;\r\n        align-items: center;\r\n        justify-content: space-between;\r\n        border-radius: 10px;\n}\n.post > div[data-v-3d1b2bbe] {\r\n        display: flex;\r\n        flex-direction: column;\n}\n.post__btns[data-v-3d1b2bbe] {\r\n        display: flex;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.post[data-v-3d1b2bbe] {\r\n        padding: 15px;\r\n        border: 2px solid rgb(66, 133, 51);\r\n        margin-top: 15px;\r\n        display: flex;\r\n        align-items: center;\r\n        justify-content: space-between;\r\n        border-radius: 10px;\n}\n.post > div[data-v-3d1b2bbe] {\r\n        display: flex;\r\n        flex-direction: column;\n}\n.post__btns[data-v-3d1b2bbe] {\r\n        flex-direction: unset !important;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
