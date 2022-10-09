@@ -15,11 +15,7 @@
                 type="text"
                 placeholder="Название"
             />
-            <my-input
-                v-model="post.body"
-                type="text"
-                placeholder="Описание"
-            />
+            <my-text-area v-model="post.body"></my-text-area>
             <my-input
                 v-model="post.author"
                 type="text"
@@ -66,11 +62,13 @@
 <script>
     import axios from 'axios';
     import PostItem from "../components/PostItem";
+import MyTextArea from '../components/UI/MyTextArea.vue';
 
     export default {
         components: {
-            PostItem
-        },
+    PostItem,
+    MyTextArea
+},
         data() {
             return {
                 posts: [],
