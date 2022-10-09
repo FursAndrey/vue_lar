@@ -10,7 +10,7 @@
             <my-button @click="$router.push(`/post/${post.id}`)" v-if="this.isAllPosts">
                 Открыть
             </my-button>
-            <my-button @click="$emit('editPost', post.id)" style="margin: 0 15px;">
+            <my-button @click="$emit('editPost', post.id)" style="margin: 0 15px;" v-if="this.isAllPosts">
                 Изменить
             </my-button>
             <my-button @click="$emit('removePost', post.id)">        
