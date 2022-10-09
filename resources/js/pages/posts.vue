@@ -2,6 +2,10 @@
     <h2>I'm posts page.</h2>
     <div class="functions">
         <my-button @click="showDialog">Создать пост</my-button>
+        <my-select
+            v-model="selectedSort"
+            :options="sortOptions"
+        />
     </div>
     <my-modal v-model:show="dialogVisible" @hideDialog="hideDialog">
         <form @submit.prevent>
@@ -36,7 +40,7 @@
     <div class="content">
         <transition-group name="user-list">
             <post-item
-                v-for="post in posts"
+                v-for="post in sortedPosts"
                 :post="post"
                 :key="post.id"
                 @removePost="removePost"
@@ -74,12 +78,20 @@
                 isNewPost: true,
                 postId: '',
                 post: {
+                    id: '',
                     title: '',
                     body: '',
                     author: '',
                 },
                 currentPage: 1,
                 totalPages: 0,
+                selectedSort: '',
+                sortOptions: [
+                    {value: 'id', name: 'По номеру'},
+                    {value: 'title', name: 'По названию'},
+                    {value: 'body', name: 'По содержимому'},
+                    {value: 'author', name: 'По имени автора'},
+                ]
             }
         },
         mounted() {
@@ -111,7 +123,6 @@
                     .catch((error) => {
                         console.log('error createPost');
                         console.log(error);
-                        console.log(this.post);
                     });
                 this.isNewPost = true;
             },
@@ -160,6 +171,18 @@
             changePage(page) {
                 this.currentPage = page;
             }
+        },
+        computed: {
+            sortedPosts() {
+                return [...this.posts].sort(
+                    (post1, post2) => {
+                        post1[this.selectedSort] = ''+post1[this.selectedSort];
+                        post2[this.selectedSort] = ''+post2[this.selectedSort];
+
+                        return post1[this.selectedSort]?.localeCompare(post2[this.selectedSort])
+                    }
+                );
+            },
         },
         watch: {
             currentPage() {
