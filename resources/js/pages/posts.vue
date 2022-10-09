@@ -7,6 +7,24 @@
             :options="sortOptions"
         />
     </div>
+    <p style="text-align:center">Блок поиска</p>
+    <div class="search-block">
+        <my-input
+            v-model="searchTitle"
+            type="text"
+            placeholder="Поиск по названию"
+        />
+        <my-input
+            v-model="searchBody"
+            type="text"
+            placeholder="Поиск по тексту"
+        />
+        <my-input
+            v-model="searchAuthor"
+            type="text"
+            placeholder="Поиск по автору"
+        />
+    </div>
     <my-modal v-model:show="dialogVisible" @hideDialog="hideDialog">
         <form @submit.prevent>
             <h4>Создание поста</h4>
@@ -36,7 +54,7 @@
     <div class="content">
         <transition-group name="user-list">
             <post-item
-                v-for="post in sortedPosts"
+                v-for="post in sortedAndTitleBodyAuthorSearch"
                 :post="post"
                 :key="post.id"
                 @removePost="removePost"
@@ -62,13 +80,13 @@
 <script>
     import axios from 'axios';
     import PostItem from "../components/PostItem";
-import MyTextArea from '../components/UI/MyTextArea.vue';
+    import MyTextArea from '../components/UI/MyTextArea.vue';
 
     export default {
         components: {
-    PostItem,
-    MyTextArea
-},
+            PostItem,
+            MyTextArea,
+        },
         data() {
             return {
                 posts: [],
@@ -89,7 +107,10 @@ import MyTextArea from '../components/UI/MyTextArea.vue';
                     {value: 'title', name: 'По названию'},
                     {value: 'body', name: 'По содержимому'},
                     {value: 'author', name: 'По имени автора'},
-                ]
+                ],
+                searchTitle: '',
+                searchBody: '',
+                searchAuthor: '',
             }
         },
         mounted() {
@@ -181,6 +202,15 @@ import MyTextArea from '../components/UI/MyTextArea.vue';
                     }
                 );
             },
+            sortedAndTitleSearch() {
+                return this.sortedPosts.filter(post => post.title.toLowerCase().includes(this.searchTitle.toLowerCase()))
+            },
+            sortedAndTitleBodySearch() {
+                return this.sortedAndTitleSearch.filter(post => post.body.toLowerCase().includes(this.searchBody.toLowerCase()))
+            },
+            sortedAndTitleBodyAuthorSearch() {
+                return this.sortedAndTitleBodySearch.filter(post => post.author.toLowerCase().includes(this.searchAuthor.toLowerCase()))
+            }
         },
         watch: {
             currentPage() {
@@ -225,5 +255,13 @@ import MyTextArea from '../components/UI/MyTextArea.vue';
     }    
     .pagination > .current-page {
         border: 2px solid green;
+    }
+    .search-block {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .search-block > input {
+        width: fit-content;
     }
 </style>
