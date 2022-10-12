@@ -7,23 +7,25 @@
             :options="sortOptions"
         />
     </div>
-    <p style="text-align:center">Блок поиска</p>
     <div class="search-block">
-        <my-input
-            v-model="searchTitle"
-            type="text"
-            placeholder="Поиск по названию"
-        />
-        <my-input
-            v-model="searchBody"
-            type="text"
-            placeholder="Поиск по тексту"
-        />
-        <my-input
-            v-model="searchAuthor"
-            type="text"
-            placeholder="Поиск по автору"
-        />
+        <p style="text-align:center">Блок поиска</p>
+        <div>
+            <my-input
+                v-model="searchTitle"
+                type="text"
+                placeholder="Поиск по названию"
+            />
+            <my-input
+                v-model="searchBody"
+                type="text"
+                placeholder="Поиск по тексту"
+            />
+            <my-input
+                v-model="searchAuthor"
+                type="text"
+                placeholder="Поиск по автору"
+            />
+        </div>
     </div>
     <my-modal v-model:show="dialogVisible" @hideDialog="hideDialog">
         <form @submit.prevent>
@@ -257,11 +259,16 @@
         border: 2px solid green;
     }
     .search-block {
+        border-radius: 10px;
+        padding: 20px;
+        border: 2px solid green;
+    }
+    .search-block > div {
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: space-between;
     }
-    .search-block > input {
-        width: fit-content;
+    .search-block > div > input {
+        width: 30%;
     }
 </style>

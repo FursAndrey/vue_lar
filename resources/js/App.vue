@@ -5,6 +5,7 @@
     <div class="header">
         <h1 class="logo"><RouterLink to="/">Vue + Laravel</RouterLink></h1>
         <div id='nav-bar'>
+            <RouterLink to="/cApi">CompositionApi</RouterLink>
             <RouterLink to="/posts">Posts</RouterLink>
         </div>
     </div>
@@ -34,5 +35,6 @@ div#nav-bar {
     padding: 10px;
     border-radius: 10px;
     color: green;
+    margin-left: 15px;;
 }
 </style>
