@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import home from '../pages/home.vue';
 import posts from '../pages/posts.vue';
 import post from '../pages/post.vue';
+import compositionApi from '../pages/compositionApi.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -20,6 +21,11 @@ const router = createRouter({
             path: '/post/:id',
             name: 'post',
             component: post
+        },
+        {
+            path: '/cApi',
+            name: 'compositionApi',
+            component: compositionApi
         },
     ]
 })
