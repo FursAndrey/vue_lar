@@ -82,12 +82,12 @@
 <script>
     import axios from 'axios';
     import PostItem from "../components/PostItem";
-    import MyTextArea from '../components/UI/MyTextArea.vue';
+    // import MyTextArea from '../components/UI/MyTextArea.vue';
 
     export default {
         components: {
             PostItem,
-            MyTextArea,
+            // MyTextArea,
         },
         data() {
             return {
