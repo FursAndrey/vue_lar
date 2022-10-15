@@ -19949,12 +19949,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _hooks_usePosts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../hooks/usePosts */ "./resources/js/hooks/usePosts.js");
-/* harmony import */ var _hooks_useSortedPosts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../hooks/useSortedPosts */ "./resources/js/hooks/useSortedPosts.js");
-/* harmony import */ var _hooks_useTitleSearchPosts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/useTitleSearchPosts */ "./resources/js/hooks/useTitleSearchPosts.js");
-/* harmony import */ var _hooks_useBodySearchPosts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../hooks/useBodySearchPosts */ "./resources/js/hooks/useBodySearchPosts.js");
-/* harmony import */ var _hooks_useAuthorSearchPosts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../hooks/useAuthorSearchPosts */ "./resources/js/hooks/useAuthorSearchPosts.js");
-/* harmony import */ var _components_PostItem__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/PostItem */ "./resources/js/components/PostItem.vue");
+/* harmony import */ var _components_PostItem__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/PostItem */ "./resources/js/components/PostItem.vue");
+/* harmony import */ var _hooks_usePosts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../hooks/usePosts */ "./resources/js/hooks/usePosts.js");
+/* harmony import */ var _hooks_useSortedPosts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/useSortedPosts */ "./resources/js/hooks/useSortedPosts.js");
+/* harmony import */ var _hooks_useTitleSearchPosts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../hooks/useTitleSearchPosts */ "./resources/js/hooks/useTitleSearchPosts.js");
+/* harmony import */ var _hooks_useBodySearchPosts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../hooks/useBodySearchPosts */ "./resources/js/hooks/useBodySearchPosts.js");
+/* harmony import */ var _hooks_useAuthorSearchPosts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../hooks/useAuthorSearchPosts */ "./resources/js/hooks/useAuthorSearchPosts.js");
 
 
 
@@ -19964,7 +19964,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    PostItem: _components_PostItem__WEBPACK_IMPORTED_MODULE_6__["default"]
+    PostItem: _components_PostItem__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
@@ -19980,28 +19980,36 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         value: 'author',
         name: 'По имени автора'
-      }]
+      }],
+      postId: ''
     };
   },
+  // methods: {
+  //     removePost(postId) {
+  //         console.log('deletePost');
+  //         console.log(this);
+  //         console.log(postId);
+  //     }
+  // },
   setup: function setup(props) {
-    var _usePosts = (0,_hooks_usePosts__WEBPACK_IMPORTED_MODULE_1__["default"])(),
+    var _usePosts = (0,_hooks_usePosts__WEBPACK_IMPORTED_MODULE_2__["default"])(),
         posts = _usePosts.posts,
         currentPage = _usePosts.currentPage,
         totalPages = _usePosts.totalPages;
 
-    var _useSortedPosts = (0,_hooks_useSortedPosts__WEBPACK_IMPORTED_MODULE_2__["default"])(posts),
+    var _useSortedPosts = (0,_hooks_useSortedPosts__WEBPACK_IMPORTED_MODULE_3__["default"])(posts),
         sortedPosts = _useSortedPosts.sortedPosts,
         selectedSort = _useSortedPosts.selectedSort;
 
-    var _useTitleSearchPosts = (0,_hooks_useTitleSearchPosts__WEBPACK_IMPORTED_MODULE_3__["default"])(sortedPosts),
+    var _useTitleSearchPosts = (0,_hooks_useTitleSearchPosts__WEBPACK_IMPORTED_MODULE_4__["default"])(sortedPosts),
         searchTitle = _useTitleSearchPosts.searchTitle,
         titleSearch = _useTitleSearchPosts.titleSearch;
 
-    var _useBodySearchPosts = (0,_hooks_useBodySearchPosts__WEBPACK_IMPORTED_MODULE_4__["default"])(titleSearch),
+    var _useBodySearchPosts = (0,_hooks_useBodySearchPosts__WEBPACK_IMPORTED_MODULE_5__["default"])(titleSearch),
         searchBody = _useBodySearchPosts.searchBody,
         bodySearch = _useBodySearchPosts.bodySearch;
 
-    var _useAuthorSearchPosts = (0,_hooks_useAuthorSearchPosts__WEBPACK_IMPORTED_MODULE_5__["default"])(bodySearch),
+    var _useAuthorSearchPosts = (0,_hooks_useAuthorSearchPosts__WEBPACK_IMPORTED_MODULE_6__["default"])(bodySearch),
         searchAuthor = _useAuthorSearchPosts.searchAuthor,
         authorSearch = _useAuthorSearchPosts.authorSearch;
 
@@ -20124,12 +20132,10 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
- // import MyTextArea from '../components/UI/MyTextArea.vue';
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    PostItem: _components_PostItem__WEBPACK_IMPORTED_MODULE_1__["default"] // MyTextArea,
-
+    PostItem: _components_PostItem__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
