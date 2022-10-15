@@ -40,27 +40,36 @@
 
 <script>
 import {ref} from 'vue';
+import PostItem from "../components/PostItem";
+
 import usePosts from "../hooks/usePosts";
 import useSortedPosts from "../hooks/useSortedPosts";
 import useTitleSearchPosts from "../hooks/useTitleSearchPosts";
 import useBodySearchPosts from "../hooks/useBodySearchPosts";
 import useAuthorSearchPosts from "../hooks/useAuthorSearchPosts";
-import PostItem from "../components/PostItem";
 
 export default {
     components: {
         PostItem,
     },
     data() {
-            return {
-                sortOptions: [
-                    {value: 'id', name: 'По номеру'},
-                    {value: 'title', name: 'По названию'},
-                    {value: 'body', name: 'По содержимому'},
-                    {value: 'author', name: 'По имени автора'},
-                ],
-            }
-        },
+        return {
+            sortOptions: [
+                {value: 'id', name: 'По номеру'},
+                {value: 'title', name: 'По названию'},
+                {value: 'body', name: 'По содержимому'},
+                {value: 'author', name: 'По имени автора'},
+            ],
+            postId: '',
+        }
+    },
+    // methods: {
+    //     removePost(postId) {
+    //         console.log('deletePost');
+    //         console.log(this);
+    //         console.log(postId);
+    //     }
+    // },
     setup(props) {
         const {posts, currentPage, totalPages} = usePosts();
         const {sortedPosts, selectedSort} = useSortedPosts(posts);
@@ -81,7 +90,7 @@ export default {
             searchAuthor, 
             titleSearch, 
             bodySearch, 
-            authorSearch
+            authorSearch,
         }
     }
 }

@@ -65,6 +65,10 @@ class PostController extends Controller
      */
     public function destroy(int $postId)
     {
+        if ($postId == 0) {
+            return response()->json($postId);
+        }
+        
         $thisPost = Post::find($postId);
         $thisPost->delete();
         return response()->json($thisPost);
